@@ -1,8 +1,7 @@
 package com.packt.webstore.domain.repository.impl;
 
 import java.math.BigDecimal;
-import java.util.ArrayList;
-import java.util.List;
+import java.util.*;
 
 import org.springframework.stereotype.Repository;
 
@@ -72,4 +71,44 @@ public class InMemoryProductRepository implements ProductRepository{
 		}
 		return productsByCategory;
     }
+
+    @Override
+    public Set<Product> getProductsByFilter(Map<String, List<String>> filterParameters) {
+        Set<Product> productsByBrand = new HashSet<>();
+        Set<Product> productsByCategory = new HashSet<>();
+        Set<String> criteria = filterParameters.keySet();
+
+        if(criteria.contains("brand")){
+        	productsByBrand = getProductsByFilter(filterParameters.get("brand"));
+		}
+
+		if(criteria.contains("category")){
+        	for(String category: filterParameters.get("category")){
+        		productsByCategory.addAll(this.getProductByCategory(category));
+			}
+		}
+
+		productsByCategory.retainAll(productsByBrand);
+		return productsByCategory;
+    }
+
+    private Set<Product> getProductsByFilter(List<String> filterValues){ //TODO: unscalable, compares only product.getManufacturer()
+		Set<Product> searchResults = new HashSet<>();
+		for(String filterValue: filterValues){
+			setProductsByFilterName(filterValue, searchResults);
+		}
+		return searchResults;
+	}
+
+	private void setProductsByFilterName(String filterValue, Set<Product> productSet){
+		for(Product product: listOfProducts){
+			if(isManufacturerMatched(filterValue, product)){
+				productSet.add(product);
+			}
+		}
+	}
+
+	private boolean isManufacturerMatched(String filterValue, Product product){
+		return filterValue.equalsIgnoreCase(product.getManufacturer());
+	}
 }

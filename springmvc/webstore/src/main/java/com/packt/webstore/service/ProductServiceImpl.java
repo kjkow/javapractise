@@ -7,6 +7,8 @@ import org.springframework.stereotype.Service;
 
 import java.util.Collections;
 import java.util.List;
+import java.util.Map;
+import java.util.Set;
 
 /**
  * Created by kamil on 2017-09-04.
@@ -30,5 +32,10 @@ public class ProductServiceImpl implements ProductService {
     @Override
     public List<Product> getProductById(String id) {
         return Collections.singletonList(productRepository.getProductById(id));
+    }
+
+    @Override
+    public Set<Product> getProductsByFilter(Map<String, List<String>> filterParameters) {
+        return  productRepository.getProductsByFilter(filterParameters);
     }
 }
