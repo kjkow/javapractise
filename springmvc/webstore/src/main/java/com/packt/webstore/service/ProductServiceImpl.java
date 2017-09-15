@@ -5,7 +5,6 @@ import com.packt.webstore.domain.repository.ProductRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.util.Collections;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
@@ -30,8 +29,8 @@ public class ProductServiceImpl implements ProductService {
     }
 
     @Override
-    public List<Product> getProductById(String id) {
-        return Collections.singletonList(productRepository.getProductById(id));
+    public Product getProductById(String id) {
+        return productRepository.getProductById(id);
     }
 
     @Override
