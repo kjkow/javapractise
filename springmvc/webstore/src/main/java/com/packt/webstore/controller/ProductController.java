@@ -62,5 +62,7 @@ public class ProductController {
 		return "product";
 	}
 
+	//todo: handle request: /products/tablet/price;low=200;high=400?manufacturer=Google
+
 
 }
