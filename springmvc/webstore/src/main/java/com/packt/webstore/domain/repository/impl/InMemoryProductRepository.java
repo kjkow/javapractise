@@ -88,8 +88,23 @@ public class InMemoryProductRepository implements ProductRepository{
 			}
 		}
 
+		if(criteria.contains("price")){
+			//todo: make filter search
+		}
+
 		productsByCategory.retainAll(productsByBrand);
 		return productsByCategory;
+    }
+
+    @Override
+    public List<Product> getProductsByManufacturer(String manufacturer) {
+		List<Product> productsByManufacturer = new ArrayList<>();
+		for(Product product: listOfProducts){
+			if(manufacturer.equalsIgnoreCase(product.getManufacturer())){
+				productsByManufacturer.add(product);
+			}
+		}
+		return productsByManufacturer;
     }
 
     private Set<Product> getProductsByFilter(List<String> filterValues){ //TODO: unscalable, compares only product.getManufacturer()
@@ -102,7 +117,7 @@ public class InMemoryProductRepository implements ProductRepository{
 
 	private void setProductsByFilterName(String filterValue, Set<Product> productSet){
 		for(Product product: listOfProducts){
-			if(isManufacturerMatched(filterValue, product)){
+			if(isManufacturerMatched(filterValue, product)){//todo: maybe enum with values that can be filtered, and here switch construction
 				productSet.add(product);
 			}
 		}
