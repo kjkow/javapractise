@@ -1,13 +1,16 @@
 package com.packt.webstore.controller;
 
+import com.packt.webstore.domain.Product;
 import com.packt.webstore.service.ProductService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
 
 @Controller
 @RequestMapping("/products")
@@ -64,5 +67,20 @@ public class ProductController {
 
 	//todo: handle request: /products/tablet/price;low=200;high=400?manufacturer=Google
 
+	@RequestMapping(value ="/{category}/{price}", method = RequestMethod.GET)
+	public String filterProducts(
+			Model model,
+			@PathVariable("category") String productCategory,
+			@MatrixVariable(pathVar = "price") Map<String, Integer> filterParameters, //todo: something with this variable
+			@PathVariable("manufacturer") String manufacturer){ //todo: or this one
+
+		Set<Product> searchResults = new HashSet<>();
+		searchResults.addAll(productService.getProductsByCategory(productCategory));
+		//searchResults.addAll(productService.getProductsByFilter(filterParameters));
+		searchResults.addAll(productService.getProductsByManufacturer(manufacturer));
+
+		model.addAttribute("products", searchResults);
+		return "products";
+	}
 
 }
