@@ -23,4 +23,6 @@ public interface ProductService {
     Product getProductById(String id);
 
     List<Product> getProductsByManufacturer(String manufacturer);
+
+    List<Product> getProductsByPriceFilter(Map<String, String> priceFilter);
 }

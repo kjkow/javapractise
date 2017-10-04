@@ -69,12 +69,13 @@ public class ProductController {
 	public String filterProducts(
 			Model model,
 			@PathVariable("category") String productCategory,
-			@MatrixVariable(pathVar = "price") Map<String, Integer> filterParameters,
+			@MatrixVariable(pathVar = "price") Map<String, String> filterParameters,
 			@RequestParam("manufacturer") String manufacturer){
 
 		Set<Product> searchResults = new HashSet<>();
+		//todo: can't just put them in one bag, use SearchCriteria and handle this in services
+		searchResults.addAll(productService.getProductsByPriceFilter(filterParameters));
 		searchResults.addAll(productService.getProductsByCategory(productCategory));
-		//searchResults.addAll(productService.getProductsByFilter(filterParameters));
 		searchResults.addAll(productService.getProductsByManufacturer(manufacturer));
 
 		model.addAttribute("products", searchResults);

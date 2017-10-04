@@ -107,7 +107,55 @@ public class InMemoryProductRepository implements ProductRepository{
 		return productsByManufacturer;
     }
 
-    private Set<Product> getProductsByFilter(List<String> filterValues){ //TODO: unscalable, compares only product.getManufacturer()
+	@Override
+	public List<Product> getProductsByPriceRange(Map<String, String> priceRange) {
+		Set<String> range = priceRange.keySet();
+		List<Product> products = new ArrayList<>();
+		int lessThan = -1; //todo: those integers shouldn't be here
+		int moreThan = 1;
+		BigDecimal lowValue = new BigDecimal(0); //todo: should it be this way? with zero?
+		BigDecimal highValue = new BigDecimal(0);
+
+		if(range.contains("low")){ //todo: dry_1
+			lowValue = new BigDecimal(priceRange.get("low"));
+		}
+		if(range.contains("high")){
+			highValue = new BigDecimal(priceRange.get("high"));
+		}
+
+
+		if(priceRange.size() == 1){
+			if(range.contains("low")) { //todo: dry_2
+				products.addAll(getProductsByRange(lowValue, moreThan));
+			}
+			if(range.contains("high")){
+				products.addAll(getProductsByRange(highValue, lessThan));
+			}
+		}else {
+			for(Product product: listOfProducts){
+				if(product.getUnitPrice().compareTo(lowValue) == moreThan &&
+						product.getUnitPrice().compareTo(highValue) == lessThan){
+					products.add(product);
+				}
+			}
+		}
+
+		return products;
+	}
+
+	private List<Product> getProductsByRange(BigDecimal value, int comparator){
+		List<Product> products = new ArrayList<>();
+
+		for(Product product: listOfProducts){
+			if(product.getUnitPrice().compareTo(value) == comparator){
+				products.add(product);
+			}
+		}
+
+		return products;
+	}
+
+	private Set<Product> getProductsByFilter(List<String> filterValues){ //TODO: unscalable, compares only product.getManufacturer()
 		Set<Product> searchResults = new HashSet<>();
 		for(String filterValue: filterValues){
 			setProductsByFilterName(filterValue, searchResults);
