@@ -65,14 +65,12 @@ public class ProductController {
 		return "product";
 	}
 
-	//todo: handle request: /products/tablet/price;low=200;high=400?manufacturer=Google
-
 	@RequestMapping(value ="/{category}/{price}", method = RequestMethod.GET)
 	public String filterProducts(
 			Model model,
 			@PathVariable("category") String productCategory,
-			@MatrixVariable(pathVar = "price") Map<String, Integer> filterParameters, //todo: something with this variable
-			@PathVariable("manufacturer") String manufacturer){ //todo: or this one
+			@MatrixVariable(pathVar = "price") Map<String, Integer> filterParameters,
+			@RequestParam("manufacturer") String manufacturer){
 
 		Set<Product> searchResults = new HashSet<>();
 		searchResults.addAll(productService.getProductsByCategory(productCategory));
