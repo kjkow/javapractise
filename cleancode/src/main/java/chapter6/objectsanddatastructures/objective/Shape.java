@@ -1,4 +1,4 @@
-package chapter6.objective;
+package chapter6.objectsanddatastructures.objective;
 
 /**
  * Created by kamil on 2017-10-03.

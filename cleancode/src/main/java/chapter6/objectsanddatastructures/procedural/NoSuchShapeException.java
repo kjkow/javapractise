@@ -1,4 +1,4 @@
-package chapter6.procedural;
+package chapter6.objectsanddatastructures.procedural;
 
 /**
  * Created by kamil on 2017-10-03.

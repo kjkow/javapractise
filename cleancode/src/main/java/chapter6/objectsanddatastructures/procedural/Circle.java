@@ -1,4 +1,4 @@
-package chapter6.procedural;
+package chapter6.objectsanddatastructures.procedural;
 
 import java.awt.*;
 

@@ -1,4 +1,4 @@
-package chapter6.objective;
+package chapter6.objectsanddatastructures.objective;
 
 import java.awt.*;
 
