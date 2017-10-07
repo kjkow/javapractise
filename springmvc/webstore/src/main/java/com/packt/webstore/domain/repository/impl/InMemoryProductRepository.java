@@ -143,7 +143,12 @@ public class InMemoryProductRepository implements ProductRepository{
 		return products;
 	}
 
-	private List<Product> getProductsByRange(BigDecimal value, int comparator){
+    @Override
+    public void addProduct(Product product) {
+        listOfProducts.add(product);
+    }
+
+    private List<Product> getProductsByRange(BigDecimal value, int comparator){
 		List<Product> products = new ArrayList<>();
 
 		for(Product product: listOfProducts){

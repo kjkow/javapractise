@@ -25,4 +25,6 @@ public interface ProductService {
     List<Product> getProductsByManufacturer(String manufacturer);
 
     List<Product> getProductsByPriceFilter(Map<String, String> priceFilter);
+
+    void addProduct(Product product);
 }
