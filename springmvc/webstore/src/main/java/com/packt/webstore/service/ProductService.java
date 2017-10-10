@@ -16,9 +16,6 @@ public interface ProductService {
 
     List<Product> getProductsByAttribute(AvailableProductSearchCriteria attribute, String value);
 
-    //List<Product> getProductById(String id);//todo: reorganize jsp to read single Product object
-    //todo: why was this used for getproductByType?
-
     Set<Product> getProductsByFilter(Map<String, List<String>> filterParameters);
 
     List<Product> getProductsByPriceFilter(Map<String, String> priceFilter);
