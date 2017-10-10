@@ -1,5 +1,6 @@
 package com.packt.webstore.service;
 
+import com.packt.webstore.domain.AvailableProductSearchCriteria;
 import com.packt.webstore.domain.Product;
 import com.packt.webstore.domain.repository.ProductRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -16,7 +17,7 @@ public class OrderServiceImpl implements OrderService {
 
     @Override
     public void processOrder(String productId, int count) {
-        Product productById = productRepository.getProductById(productId);
+        Product productById =  productRepository.getProductsByAttribute(AvailableProductSearchCriteria.ID, productId).get(0);
         long actualUnitsInStock = productById.getUnitsInStock();
 
         if(actualUnitsInStock < count){

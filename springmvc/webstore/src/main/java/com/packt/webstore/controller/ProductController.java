@@ -1,5 +1,6 @@
 package com.packt.webstore.controller;
 
+import com.packt.webstore.domain.AvailableProductSearchCriteria;
 import com.packt.webstore.domain.Product;
 import com.packt.webstore.service.ProductService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -33,7 +34,7 @@ public class ProductController {
 
 	@RequestMapping("/{category}")
 	public String getProductsByCategory(Model model, @PathVariable("category") String productCategory){
-		model.addAttribute("products", productService.getProductsByCategory(productCategory));
+		model.addAttribute("products", productService.getProductsByAttribute(AvailableProductSearchCriteria.CATEGORY, productCategory));
 		return "products";
 	}
 
@@ -52,7 +53,7 @@ public class ProductController {
 			@RequestParam("id") String productId,
 			Model model
 	){
-		model.addAttribute("product", productService.getProductById(productId));
+		model.addAttribute("product", productService.getProductsByAttribute(AvailableProductSearchCriteria.ID, productId));
 		return "product";
 	}
 
@@ -66,8 +67,8 @@ public class ProductController {
 		Set<Product> searchResults = new HashSet<>();
 		//todo: can't just put them in one bag, use SearchCriteria and handle this in services
 		searchResults.addAll(productService.getProductsByPriceFilter(filterParameters));
-		searchResults.addAll(productService.getProductsByCategory(productCategory));
-		searchResults.addAll(productService.getProductsByManufacturer(manufacturer));
+		searchResults.addAll(productService.getProductsByAttribute(AvailableProductSearchCriteria.CATEGORY, productCategory));
+		searchResults.addAll(productService.getProductsByAttribute(AvailableProductSearchCriteria.MANUFACTURER, manufacturer));
 
 		model.addAttribute("products", searchResults);
 		return "products";

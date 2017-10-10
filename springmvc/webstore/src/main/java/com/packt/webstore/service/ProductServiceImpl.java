@@ -1,5 +1,6 @@
 package com.packt.webstore.service;
 
+import com.packt.webstore.domain.AvailableProductSearchCriteria;
 import com.packt.webstore.domain.Product;
 import com.packt.webstore.domain.repository.ProductRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -24,18 +25,8 @@ public class ProductServiceImpl implements ProductService {
     }
 
     @Override
-    public List<Product> getProductsByCategory(String category) {
-        return productRepository.getProductByCategory(category);
-    }
-
-    @Override
-    public Product getProductById(String id) {
-        return productRepository.getProductById(id);
-    }
-
-    @Override
-    public List<Product> getProductsByManufacturer(String manufacturer) {
-        return productRepository.getProductsByManufacturer(manufacturer);
+    public List<Product> getProductsByAttribute(AvailableProductSearchCriteria attribute, String value) {
+        return null;
     }
 
     @Override

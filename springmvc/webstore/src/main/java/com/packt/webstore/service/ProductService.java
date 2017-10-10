@@ -1,5 +1,6 @@
 package com.packt.webstore.service;
 
+import com.packt.webstore.domain.AvailableProductSearchCriteria;
 import com.packt.webstore.domain.Product;
 
 import java.util.List;
@@ -13,16 +14,12 @@ public interface ProductService {
 
     List<Product> getAllProducts();
 
-    List<Product> getProductsByCategory(String category);
+    List<Product> getProductsByAttribute(AvailableProductSearchCriteria attribute, String value);
 
     //List<Product> getProductById(String id);//todo: reorganize jsp to read single Product object
     //todo: why was this used for getproductByType?
 
     Set<Product> getProductsByFilter(Map<String, List<String>> filterParameters);
-
-    Product getProductById(String id);
-
-    List<Product> getProductsByManufacturer(String manufacturer);
 
     List<Product> getProductsByPriceFilter(Map<String, String> priceFilter);
 

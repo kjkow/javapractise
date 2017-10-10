@@ -1,12 +1,12 @@
 package com.packt.webstore.domain.repository.impl;
 
-import java.math.BigDecimal;
-import java.util.*;
-
-import org.springframework.stereotype.Repository;
-
+import com.packt.webstore.domain.AvailableProductSearchCriteria;
 import com.packt.webstore.domain.Product;
 import com.packt.webstore.domain.repository.ProductRepository;
+import org.springframework.stereotype.Repository;
+
+import java.math.BigDecimal;
+import java.util.*;
 
 @Repository
 public class InMemoryProductRepository implements ProductRepository{
@@ -44,33 +44,31 @@ public class InMemoryProductRepository implements ProductRepository{
 	}
 
 	@Override
-	public Product getProductById(String productId) {
-		Product productById = null;
-		
-		for(Product product : listOfProducts) {
-			if(product!=null && product.getProductId()!=null && product.getProductId().equals(productId)){
-				productById = product;
-				break;
-			}
-		}
-		
-		if(productById == null){
-			throw new IllegalArgumentException("Brak produktu o wskazanym id: "+ productId);
-		}
-		
-		return productById;
-	}
+	public List<Product> getProductsByAttribute(AvailableProductSearchCriteria attribute, String value) {
+		List<Product> productsByAttribute = new ArrayList<>();
 
-    @Override
-    public List<Product> getProductByCategory(String category) {
-        List<Product> productsByCategory = new ArrayList<>();
-        for(Product product: listOfProducts){
-        	if(category.equalsIgnoreCase(product.getCategory())){
-        		productsByCategory.add(product);
+		for(Product product: listOfProducts){
+			switch (attribute){
+				case ID:
+					if(product.getProductId().equalsIgnoreCase(value)){
+						productsByAttribute.add(product);
+					}
+					break;
+				case CATEGORY:
+					if(product.getCategory().equalsIgnoreCase(value)){
+						productsByAttribute.add(product);
+					}
+					break;
+				case MANUFACTURER:
+					if(product.getManufacturer().equalsIgnoreCase(value)){
+						productsByAttribute.add(product);
+					}
+					break;
 			}
 		}
-		return productsByCategory;
-    }
+
+		return productsByAttribute;
+	}
 
     @Override
     public Set<Product> getProductsByFilter(Map<String, List<String>> filterParameters) {
@@ -84,7 +82,7 @@ public class InMemoryProductRepository implements ProductRepository{
 
 		if(criteria.contains("category")){
         	for(String category: filterParameters.get("category")){
-        		productsByCategory.addAll(this.getProductByCategory(category));
+        		productsByCategory.addAll(this.getProductsByAttribute(AvailableProductSearchCriteria.CATEGORY, category));
 			}
 		}
 
@@ -94,17 +92,6 @@ public class InMemoryProductRepository implements ProductRepository{
 
 		productsByCategory.retainAll(productsByBrand);
 		return productsByCategory;
-    }
-
-    @Override
-    public List<Product> getProductsByManufacturer(String manufacturer) {
-		List<Product> productsByManufacturer = new ArrayList<>();
-		for(Product product: listOfProducts){
-			if(manufacturer.equalsIgnoreCase(product.getManufacturer())){
-				productsByManufacturer.add(product);
-			}
-		}
-		return productsByManufacturer;
     }
 
 	@Override
