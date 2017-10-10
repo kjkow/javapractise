@@ -37,15 +37,6 @@ public class ProductController {
 		return "products";
 	}
 
-	@RequestMapping(value = "/type/{type}", method = RequestMethod.GET)
-	public String getProductByType( //todo: why was it getProductById? should it be 'type'?
-			@PathVariable("type") String productType,
-			Model model
-	) {
-		model.addAttribute("products", productService.getProductById(productType));
-		return "products";
-	}
-
 	@RequestMapping("/filter/{byCriteria}")
 	public String getProductsByFilter(
 			@MatrixVariable(pathVar = "byCriteria")
