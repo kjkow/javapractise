@@ -26,7 +26,7 @@ public class ProductServiceImpl implements ProductService {
 
     @Override
     public List<Product> getProductsByAttribute(AvailableProductSearchCriteria attribute, String value) {
-        return null;
+        return productRepository.getProductsByAttribute(attribute, value);
     }
 
     @Override
