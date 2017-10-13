@@ -6,6 +6,8 @@ import com.packt.webstore.service.ProductService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
+import org.springframework.web.bind.WebDataBinder;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.HashSet;
@@ -19,6 +21,11 @@ public class ProductController {
 	
 	@Autowired
 	private ProductService productService;
+
+	@InitBinder
+	public void initialiseBinder(WebDataBinder binder){
+		binder.setDisallowedFields("unitsInOrder", "discounted");
+	} //somebody could manipulate http request and add fields that we don't want at this point in our domain object
 
 	@RequestMapping
 	public String list(Model model) {
@@ -83,7 +90,14 @@ public class ProductController {
 
 	@RequestMapping(value = "/add", method = RequestMethod.POST)
 	public String processAddNewProductForm(
-			@ModelAttribute("newProduct") Product newProduct){
+			@ModelAttribute("newProduct") Product newProduct,
+			BindingResult result){
+
+		String[] suppressedFields = result.getSuppressedFields();
+		if(suppressedFields.length > 0){
+			throw new RuntimeException("Unauthorized fields binding attempt");
+		}
+
 		productService.addProduct(newProduct);
 		return "redirect:/products";
 	}
