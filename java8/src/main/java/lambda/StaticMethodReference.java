@@ -13,7 +13,7 @@ public class StaticMethodReference {
 
     public static void main(String[] args) {
         String input = "Anne has a cat";
-        String output = stringOperation(StringOperations::reverse, input); //pretty cool right?
+        String output = stringOperation(StringOperations::reverseStaticVersion, input); //pretty cool right?
 
         System.out.println(output);
     }
