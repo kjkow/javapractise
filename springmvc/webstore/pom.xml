@@ -47,23 +47,6 @@
         <version>3.1.0</version>
         <scope>provided</scope>
     </dependency>
-    <!-- https://mvnrepository.com/artifact/org.springframework.security/spring-security-web -->
-    <dependency>
-        <groupId>org.springframework.security</groupId>
-        <artifactId>spring-security-web</artifactId>
-        <version>4.2.3.RELEASE</version>
-    </dependency>
-    <dependency>
-        <groupId>org.springframework.security</groupId>
-        <artifactId>spring-security-config</artifactId>
-        <version>3.1.4.RELEASE</version>
-        <exclusions>
-            <exclusion>
-                <artifactId>spring-asm</artifactId>
-                <groupId>org.springframework</groupId>
-            </exclusion>
-        </exclusions>
-    </dependency>
 
 
 </dependencies>
