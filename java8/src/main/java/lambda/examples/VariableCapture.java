@@ -1,4 +1,4 @@
-package lambda;
+package lambda.examples;
 
 import chapter2.context.good.GuessStatisticsMessage;
 import lambda.interfaces.NumericFunction;

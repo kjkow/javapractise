@@ -1,4 +1,4 @@
-package lambda;
+package lambda.examples;
 
 import lambda.interfaces.StringFunction;
 

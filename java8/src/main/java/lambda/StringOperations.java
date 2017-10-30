@@ -5,7 +5,7 @@ package lambda;
  */
 public class StringOperations {
 
-    static String reverseStaticVersion(String input){
+    public static String reverseStaticVersion(String input){
         StringBuilder result = new StringBuilder();
 
         for (int i = input.length()-1; i >=0; i--) {
@@ -15,7 +15,7 @@ public class StringOperations {
         return result.toString();
     }
 
-    String reverseInstanceVersion(String input){
+    public String reverseInstanceVersion(String input){
         StringBuilder result = new StringBuilder();
 
         for (int i = input.length()-1; i >=0; i--) {
