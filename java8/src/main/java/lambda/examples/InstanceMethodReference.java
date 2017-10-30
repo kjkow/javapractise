@@ -1,6 +1,6 @@
 package lambda.examples;
 
-import lambda.StringOperations;
+import lambda.operations.StringOperations;
 import lambda.interfaces.StringFunction;
 
 /**

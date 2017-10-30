@@ -1,4 +1,4 @@
-package lambda;
+package lambda.operations;
 
 /**
  * Created by kamil on 2017-10-30.

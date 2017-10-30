@@ -1,6 +1,6 @@
 package lambda.examples;
 
-import lambda.ArrayOperations;
+import lambda.operations.ArrayOperations;
 import lambda.interfaces.MyFunction;
 
 /**
