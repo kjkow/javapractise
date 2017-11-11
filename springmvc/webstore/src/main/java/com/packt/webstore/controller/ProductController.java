@@ -10,10 +10,7 @@ import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.WebDataBinder;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.HashSet;
-import java.util.List;
-import java.util.Map;
-import java.util.Set;
+import java.util.*;
 
 @Controller
 @RequestMapping("/products")
@@ -60,8 +57,12 @@ public class ProductController {
 			@RequestParam("id") String productId,
 			Model model
 	){
-		model.addAttribute("product", productService.getProductsByAttribute(AvailableProductSearchCriteria.ID, productId));
-		return "product";
+		List<Product> products = productService.getProductsByAttribute(AvailableProductSearchCriteria.ID, productId);
+		if(products.size() > 0){
+			model.addAttribute("product", products.get(0));
+			return "product";
+		}
+		return "redirect:/products";
 	}
 
 	@RequestMapping(value ="/{category}/{price}", method = RequestMethod.GET)
