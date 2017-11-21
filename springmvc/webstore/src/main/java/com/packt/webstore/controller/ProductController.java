@@ -9,7 +9,10 @@ import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.WebDataBinder;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 
+import javax.servlet.http.HttpServletRequest;
+import java.io.File;
 import java.util.*;
 
 @Controller
@@ -22,6 +25,7 @@ public class ProductController {
 	@InitBinder
 	public void initialiseBinder(WebDataBinder binder){
 		binder.setDisallowedFields("unitsInOrder", "discounted");
+		binder.setAllowedFields("productId", "name", "name", "unitPrice", "description", "manufacturer", "category", "unitsInStock", "productImage"); //todo: this is SO WEAK
 	} //somebody could manipulate http request and add fields that we don't want at this point in our domain object
 
 	@RequestMapping
@@ -92,7 +96,8 @@ public class ProductController {
 	@RequestMapping(value = "/add", method = RequestMethod.POST)
 	public String processAddNewProductForm(
 			@ModelAttribute("newProduct") Product newProduct,
-			BindingResult result){
+			BindingResult result,
+			HttpServletRequest request){
 
 		String[] suppressedFields = result.getSuppressedFields();
 		if(suppressedFields.length > 0){
@@ -100,6 +105,16 @@ public class ProductController {
 		}
 
 		productService.addProduct(newProduct);
+		MultipartFile productImage = newProduct.getProductImage();
+		String rootDirectory = request.getSession().getServletContext().getRealPath("/");
+		if(productImage != null && !productImage.isEmpty()){ //todo: untested
+			try{
+				productImage.transferTo(new File(rootDirectory + "resources\\images\\" + newProduct.getProductId() + ".png"));
+			}catch (Exception e){
+				throw new RuntimeException("Failed to save image", e);
+			}
+		}
+
 		return "redirect:/products";
 	}
 
