@@ -25,7 +25,7 @@ public class ProductController {
 	@InitBinder
 	public void initialiseBinder(WebDataBinder binder){
 		binder.setDisallowedFields("unitsInOrder", "discounted");
-		binder.setAllowedFields("productId", "name", "name", "unitPrice", "description", "manufacturer", "category", "unitsInStock", "productImage"); //todo: this is SO WEAK
+		binder.setAllowedFields("productId", "name", "name", "unitPrice", "description", "manufacturer", "category", "unitsInStock", "productImage", "productInstruction"); //todo: this is SO WEAK
 	} //somebody could manipulate http request and add fields that we don't want at this point in our domain object
 
 	@RequestMapping
@@ -107,11 +107,20 @@ public class ProductController {
 		productService.addProduct(newProduct);
 		MultipartFile productImage = newProduct.getProductImage();
 		String rootDirectory = request.getSession().getServletContext().getRealPath("/");
-		if(productImage != null && !productImage.isEmpty()){ //todo: untested
+		if(productImage != null && !productImage.isEmpty()){
 			try{
 				productImage.transferTo(new File(rootDirectory + "resources\\images\\" + newProduct.getProductId() + ".png"));
 			}catch (Exception e){
 				throw new RuntimeException("Failed to save image", e);
+			}
+		}
+
+		MultipartFile productInstruction = newProduct.getProductInstruction();
+		if(productInstruction != null && !productInstruction.isEmpty()){
+			try{
+				productInstruction.transferTo(new File(rootDirectory + "resources\\pdf\\" + newProduct.getProductId() + ".pdf"));
+			}catch (Exception e){
+				throw new RuntimeException("Failed to save instruction", e);
 			}
 		}
 

@@ -17,6 +17,7 @@ public class Product {
 	private boolean discontinued;
 	private String condition;
 	private MultipartFile productImage;
+	private MultipartFile productInstruction;
 
 	public Product() {
 		super();
@@ -26,6 +27,14 @@ public class Product {
 		this.productId = productId;
 		this.name = name;
 		this.unitPrice = unitPrice;
+	}
+
+	public MultipartFile getProductInstruction() {
+		return productInstruction;
+	}
+
+	public void setProductInstruction(MultipartFile productInstruction) {
+		this.productInstruction = productInstruction;
 	}
 
 	public MultipartFile getProductImage() {

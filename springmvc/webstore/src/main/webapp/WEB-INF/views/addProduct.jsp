@@ -94,6 +94,15 @@
 				        <form:input id="productImage" path="productImage" type="file" class="form:input-large" />
 				    </div>
 				</div>
+
+				<div class="form-group">
+                    <label class="control-label col-lg-2" for="productImage">
+                        <spring:message code="addProduct.form.productInstruction.label"/>
+                    </label>
+                    <div class="col-lg-10">
+                        <form:input id="productInstruction" path="productInstruction" type="file" class="form:input-large" />
+                	</div>
+                </div>
 				
 				<div class="form-group">
 					<div class="col-lg-offset-2 col-lg-10">
