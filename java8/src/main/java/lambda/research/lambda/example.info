@@ -1,0 +1,16 @@
+Ideal Use Case for Lambda Expressions
+
+Name: Perform action on selected members
+Primary Actor: Administrator
+Preconditions: Administrator is logged in to the system.
+Postconditions: Action is performed only on members that fit the specified criteria.
+Main Success Scenario:
+    1. Administrator specifies criteria of members on which to perform a certain action.
+    2. Administrator specifies an action to perform on those selected members.
+    3. Administrator selects the Submit button.
+    4. The system finds all members that match the specified criteria.
+    5. The system performs the specified action on all matching members.
+Extensions:
+    1a. Administrator has an option to preview those members who match the specified criteria
+    before he or she specifies the action to be performed or before selecting the Submit button.
+Frequency of Occurrence: Many times during the day.
